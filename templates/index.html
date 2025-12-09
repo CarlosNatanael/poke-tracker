@@ -29,18 +29,19 @@
 
         <div class="list">
             {% for game in games %}
-            <div class="game-card {{ game.class }}">
-                <img src="{{ game.image }}" alt="{{ game.name }}" class="game-icon">
-                
-                <div class="game-info">
-                    <span class="game-name">{{ game.name }}</span>
-                    <strong class="game-status">{{ game.status }}</strong>
+            <a href="/game/{{ game.id }}" style="text-decoration: none; color: inherit;">
+                <div class="game-card {{ game.class }}">
+                    <img src="{{ game.image }}" alt="{{ game.name }}" class="game-icon">
                     
-                    {% if game.date %}
-                    <span class="completion-date">Platinado em: {{ game.date }}</span>
-                    {% endif %}
+                    <div class="game-info">
+                        <span class="game-name">{{ game.name }}</span>
+                        <strong class="game-status">{{ game.status }}</strong>
+                        <span style="display:block; font-size: 0.7rem; color: #666; margin-top: 5px;">
+                            Clique para ver detalhes
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>

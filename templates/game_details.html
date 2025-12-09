@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game.title }} | Detalhes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        /* Estilos exclusivos desta página */
+        .details-container {
+            display: flex;
+            background: #202024;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 900px;
+            margin: 20px auto;
+            gap: 30px;
+            border: 1px solid #333;
+        }
+        .box-art {
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .info-col { flex: 1; text-align: left; }
+        .game-title { font-size: 2.5rem; color: #f1c40f; margin-bottom: 10px; }
+        .console-badge { 
+            background: #333; padding: 5px 10px; border-radius: 4px; 
+            font-size: 0.9rem; color: #aaa; text-transform: uppercase;
+        }
+        .stat-row {
+            margin-top: 25px;
+            padding: 15px;
+            background: #29292e;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stat-label { color: #7f8c8d; font-size: 0.9rem; }
+        .stat-value { font-size: 1.2rem; font-weight: bold; }
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .btn-back:hover { background: #444; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="/" class="nav-link">← Voltar para Lista</a>
+    </nav>
+
+    <div class="details-container">
+        <div>
+            <img src="{{ game.box_art }}" alt="Box Art" class="box-art">
+        </div>
+
+        <div class="info-col">
+            <h1 class="game-title">{{ game.title }}</h1>
+            <span class="console-badge">{{ game.console }}</span>
+
+            <div class="stat-row">
+                <div>
+                    <div class="stat-label">Progresso Hardcore</div>
+                    <div class="stat-value" style="color: {{ '#04d361' if game.completion == '100.00%' else '#f1c40f' }}">
+                        {{ game.completion }}
+                    </div>
+                </div>
+                <div>
+                    <div class="stat-label">Conquistas</div>
+                    <div class="stat-value">{{ game.achievements_count }}</div>
+                </div>
+            </div>
+
+            <div class="stat-row">
+                <div>
+                    <div class="stat-label">Data da Platina</div>
+                    <div class="stat-value">{{ game.completion_date }}</div>
+                </div>
+                <div>
+                    <div class="stat-label">Tempo de Jogo</div>
+                    <div class="stat-value">{{ game.hours_played }}</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; color: #666; font-size: 0.8rem;">
+                * O RetroAchievements não fornece as "Horas Jogadas" via API pública.
+            </p>
+
+        </div>
+    </div>
+
+</body>
+</html>
