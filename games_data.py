@@ -1,0 +1,21 @@
+POKEMON_GAMES = {
+    724: "Pokemon Red",
+    586: "Pokemon Blue",
+    723: "Pokemon Yellow",
+    576: "Pokemon Gold",
+    722: "Pokémon Silver",
+    810: "Pokémon Crystal",
+    790: "Pokémon Ruby",
+    791: "Pokémon Sapphire",
+    515: "Pokémon FireRed",
+    788: "Pokémon LeafGreen",
+    668: "Pokémon Emerald",
+    9852: "Pokémon Diamond",
+    25369: "Pokémon Pearl",
+    11732: "Pokémon Platinum",
+    7212: "Pokémon HeartGold/SoulSilver",
+    3887: "Pokémon Black",
+    16211: "Pokémon White",
+    5853: "Pokémon Black 2",
+    16197: "Pokémon White 2"
+}
