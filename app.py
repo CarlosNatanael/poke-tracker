@@ -83,7 +83,6 @@ def index():
             "class": css_class,
             "image": image_url
         })
-
     return render_template('index.html', 
                            games=progress_list, 
                            count=platinados_count, 
@@ -124,7 +123,6 @@ def game_details(game_id):
         "completion_date": completion_date,
         "hours_played": hours_played
     }
-    
     return render_template('game_details.html', game=game_data)
 
 @app.route('/sobre')

@@ -1,4 +1,3 @@
-# Agora cada jogo tem seus dados manuais
 POKEMON_GAMES = {
     # GB (Gen 1)
     724: {"title": "Pokémon Red",         "date": "",           "hours": "4h"},
