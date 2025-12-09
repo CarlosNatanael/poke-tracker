@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>PokéPlatinas</title>
+    <style>
+        body { font-family: 'Courier New', monospace; background-color: #222; color: #fff; text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        h1 { color: #f1c40f; }
+        .counter { font-size: 2em; margin-bottom: 20px; border-bottom: 2px solid #fff; display: inline-block; }
+        
+        .game-card {
+            background: #333;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .completed { border-left: 10px solid #2ecc71; color: #2ecc71; } /* Verde */
+        .softcore { border-left: 10px solid #3498db; } /* Azul */
+        .in-progress { border-left: 10px solid #f1c40f; } /* Amarelo */
+        .not-started { border-left: 10px solid #7f8c8d; opacity: 0.6; } /* Cinza */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Minha Jornada Pokémon</h1>
+        <div class="counter">
+            {{ count }} / {{ total }}
+        </div>
+
+        <div class="list">
+            {% for game in games %}
+            <div class="game-card {{ game.class }}">
+                <span>{{ game.name }}</span>
+                <strong>{{ game.status }}</strong>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
