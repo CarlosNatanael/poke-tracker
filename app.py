@@ -6,43 +6,41 @@ app = Flask(__name__)
 
 RA_USER = "CarlosNatanael"
 RA_API_KEY = "Oy6GOQ5nOO3l8H3TkvFMw2QABo7Kw1Mn"
+RA_BASE_URL = "https://retroachievements.org/API"
+RA_IMG_BASE = "https://media.retroachievements.org"
 
 @app.route('/')
 def index():
-    url = "https://retroachievements.org/API/API_GetUserCompletedGames.php"
-    params = {
-        'z': RA_USER,
-        'y': RA_API_KEY,
-        'u': RA_USER
-    }
-    
+    params = {'z': RA_USER, 'y': RA_API_KEY, 'u': RA_USER}
+    user_data = {}
     try:
-        response = requests.get(url, params=params)
-        data = response.json()
+        resp_user = requests.get(f"{RA_BASE_URL}/API_GetUserSummary.php", params=params)
+        user_data = resp_user.json()
     except Exception as e:
-        return f"Erro na API: {e}"
-    
+        print(f"Erro ao buscar perfil: {e}")
+
     progress_list = []
     platinados_count = 0
     
-    # URL base onde ficam as imagens do RetroAchievements
-    RA_IMG_BASE = "https://media.retroachievements.org"
-    # Imagem padrão para jogos não iniciados (Pokébola)
-    DEFAULT_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/64px-Pok%C3%A9_Ball_icon.svg.png"
+    try:
+        resp_games = requests.get(f"{RA_BASE_URL}/API_GetUserCompletedGames.php", params=params)
+        data_games = resp_games.json()
+    except Exception as e:
+        return f"Erro na API de jogos: {e}"
 
-    user_games_map = {str(game['GameID']): game for game in data}
+    user_games_map = {str(game['GameID']): game for game in data_games}
+    DEFAULT_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/64px-Pok%C3%A9_Ball_icon.svg.png"
 
     for game_id, game_name in POKEMON_GAMES.items():
         status = "Não iniciado"
         css_class = "not-started"
-        image_url = DEFAULT_IMG # Começa com a Pokébola padrão
+        image_url = DEFAULT_IMG
         
         str_game_id = str(game_id)
         
         if str_game_id in user_games_map:
             user_game = user_games_map[str_game_id]
             
-            # Se a API trouxe uma imagem, usamos ela
             if user_game.get('ImageIcon'):
                 image_url = RA_IMG_BASE + user_game.get('ImageIcon')
 
@@ -65,10 +63,14 @@ def index():
             "name": game_name,
             "status": status,
             "class": css_class,
-            "image": image_url  # Passamos a imagem para o HTML
+            "image": image_url
         })
-
-    return render_template('index.html', games=progress_list, count=platinados_count, total=len(POKEMON_GAMES))
+    return render_template('index.html', 
+                           games=progress_list, 
+                           count=platinados_count, 
+                           total=len(POKEMON_GAMES),
+                           user=user_data,
+                           img_base=RA_IMG_BASE)
 
 if __name__ == '__main__':
     app.run(debug=True)
