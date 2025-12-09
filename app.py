@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import requests
+from datetime import datetime
 from games_data import POKEMON_GAMES
 try:
     from config import RA_USER, RA_API_KEY
@@ -40,6 +41,7 @@ def index():
         status = "Não iniciado"
         css_class = "not-started"
         image_url = DEFAULT_IMG
+        completion_date = None
         
         str_game_id = str(game_id)
         
@@ -56,6 +58,17 @@ def index():
                 status = "Platinado"
                 css_class = "completed"
                 platinados_count += 1
+
+                raw_date = user_game.get('HardcoreCompletionDate')
+                if raw_date:
+                    try:
+                        # Converte texto para objeto de data
+                        dt_obj = datetime.strptime(raw_date, '%Y-%m-%d %H:%M:%S')
+                        # Formata para dia/mês/ano
+                        completion_date = dt_obj.strftime('%d/%m/%Y')
+                    except:
+                        completion_date = raw_date
+
             elif pct_won == 1.0:
                 status = "Softcore 100%"
                 css_class = "softcore"
@@ -68,7 +81,8 @@ def index():
             "name": game_name,
             "status": status,
             "class": css_class,
-            "image": image_url
+            "image": image_url,
+            "date": completion_date
         })
     return render_template('index.html', 
                            games=progress_list, 
@@ -76,6 +90,10 @@ def index():
                            total=len(POKEMON_GAMES),
                            user=user_data,
                            img_base=RA_IMG_BASE)
+
+@app.route('/sobre')
+def sobre():
+    return render_template('sobre.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

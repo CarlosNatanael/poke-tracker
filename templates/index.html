@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéTracker</title>
-    
+    <title>{{ user.User }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 
+    <nav class="nav-bar">
+        <a href="/" class="nav-link active">Minha Jornada</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+    </nav>
+
     <div class="profile-header">
         <img src="{{ img_base }}{{ user.UserPic }}" alt="Avatar" class="profile-avatar">
-        
         <div class="profile-info">
             <h2>{{ user.User }}</h2>
             <p class="motto">"{{ user.Motto }}"</p>
@@ -33,6 +35,10 @@
                 <div class="game-info">
                     <span class="game-name">{{ game.name }}</span>
                     <strong class="game-status">{{ game.status }}</strong>
+                    
+                    {% if game.date %}
+                    <span class="completion-date">Platinado em: {{ game.date }}</span>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

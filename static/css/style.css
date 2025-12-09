@@ -128,6 +128,60 @@ body {
     background: rgba(255,255,255,0.05);
 }
 
+/* --- NAVEGAÇÃO --- */
+.nav-bar {
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    color: var(--gray);
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--highlight);
+    border-bottom: 2px solid var(--highlight);
+}
+
+/* --- EFEITO DA DATA (TOOLTIP) --- */
+.game-info {
+    position: relative; /* Necessário para posicionar a data */
+}
+
+.completion-date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 5px;
+    opacity: 0;           /* Começa invisível */
+    max-height: 0;        /* Não ocupa espaço */
+    transition: all 0.3s ease; /* Animação suave */
+    overflow: hidden;
+}
+
+/* Quando passar o mouse no CARD, mostra a data */
+.game-card:hover .completion-date {
+    opacity: 1;           /* Fica visível */
+    max-height: 20px;     /* Abre espaço */
+    color: var(--text-color);
+}
+
+/* --- PÁGINA SOBRE --- */
+.about-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 100%;
+    line-height: 1.6;
+}
+
+.about-content h2 { color: var(--highlight); margin-bottom: 1rem; }
+.about-content p { margin-bottom: 1rem; color: #ccc; }
+
 /* --- VARIAÇÕES DE STATUS --- */
 /* Platinado */
 .completed { border-left-color: hwb(56 1% 27%); }
