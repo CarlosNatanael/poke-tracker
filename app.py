@@ -1,16 +1,21 @@
 from flask import Flask, render_template
 import requests
 from games_data import POKEMON_GAMES
+try:
+    from config import RA_USER, RA_API_KEY
+except ImportError:
+    print("ERRO: Crie o arquivo config.py com suas chaves!")
+    RA_USER = None
+    RA_API_KEY = None
 
 app = Flask(__name__)
-
-RA_USER = "CarlosNatanael"
-RA_API_KEY = "Oy6GOQ5nOO3l8H3TkvFMw2QABo7Kw1Mn"
 RA_BASE_URL = "https://retroachievements.org/API"
 RA_IMG_BASE = "https://media.retroachievements.org"
 
 @app.route('/')
 def index():
+    if not RA_USER or not RA_API_KEY:
+        return "Erro de Configuração: API Key não encontrada no servidor."
     params = {'z': RA_USER, 'y': RA_API_KEY, 'u': RA_USER}
     user_data = {}
     try:
