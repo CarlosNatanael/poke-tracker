@@ -37,7 +37,7 @@ def index():
             hardcore = str(user_game.get('HardcoreMode', '0'))
             pct_won = float(user_game.get('PctWon', 0.0))
             if hardcore == '1' and pct_won == 1.0:
-                status = "Platinado ✅"
+                status = "Platinado"
                 css_class = "completed"
                 platinados_count += 1
             elif pct_won == 1.0:
