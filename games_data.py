@@ -1,6 +1,6 @@
 POKEMON_GAMES = {
     # GB (Gen 1)
-    724: {"title": "Pokémon Red",         "date": "",           "hours": "4h"},
+    724: {"title": "Pokémon Red",         "date": "",           "hours": "29h"},
     586: {"title": "Pokémon Blue",        "date": "",           "hours": ""},
     723: {"title": "Pokémon Yellow",      "date": "26/09/2025", "hours": "20h 30m"},
     

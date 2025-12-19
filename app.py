@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import requests
 from datetime import datetime
+from flask_caching import Cache
 import pytz
 from games_data import POKEMON_GAMES
 
@@ -10,7 +11,11 @@ except ImportError:
     RA_USER = None
     RA_API_KEY = None
 
+
 app = Flask(__name__)
+
+cache = Cache(config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 300})
+cache.init_app(app)
 
 RA_BASE_URL = "https://retroachievements.org/API"
 RA_IMG_BASE = "https://media.retroachievements.org"
@@ -27,6 +32,7 @@ def format_ra_date(date_str):
         return date_str
 
 @app.route('/')
+@cache.cached(timeout=600)
 def index():
     if not RA_USER or not RA_API_KEY:
         return "Erro: Configure o config.py"
@@ -91,6 +97,7 @@ def index():
                            img_base=RA_IMG_BASE)
 
 @app.route('/game/<int:game_id>')
+@cache.cached(timeout=600)
 def game_details(game_id):
     manual_data = POKEMON_GAMES.get(game_id, {})
     manual_date = manual_data.get('date')
