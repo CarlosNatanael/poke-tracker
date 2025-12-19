@@ -50,6 +50,34 @@
             transition: background 0.2s;
         }
         .btn-back:hover { background: #444; }
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+            gap: 8px;
+        }
+        .achievement-item {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            transition: transform 0.2s;
+            cursor: help;
+        }
+        .achievement-item img {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            border: 2px solid #333;
+            transition: border-color 0.2s;
+        }
+        .achievement-item:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .achievement-item:hover img {
+            border-color: #f1c40f;
+            box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -94,6 +122,19 @@
             <p style="margin-top: 20px; color: #666; font-size: 0.8rem;">
                 * O RetroAchievements não fornece as "Horas Jogadas" via API pública.
             </p>
+
+            {% if game.achievements_list %}
+            <div style="margin-top: 30px;">
+                <h3 style="margin-bottom: 15px; color: #f1c40f;">Conquistas Desbloqueadas</h3>
+                <div class="achievements-grid">
+                    {% for ach in game.achievements_list %}
+                    <div class="achievement-item" title="{{ ach.title }} ({{ ach.points }}pts): {{ ach.description }}">
+                        <img src="{{ ach.badge }}" alt="{{ ach.title }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
 
         </div>
     </div>

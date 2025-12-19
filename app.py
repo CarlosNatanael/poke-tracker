@@ -120,6 +120,21 @@ def game_details(game_id):
     earned = game_api.get('NumAwardedToUserHardcore', 0)
     total = game_api.get('NumAchievements', 0)
     
+    earned_achievements = []
+    all_achievements = game_api.get('Achievements', {})
+
+    for ach_id, data in all_achievements.items():
+
+        if data.get('DateEarnedHardcore'):
+            earned_achievements.append({
+                'title': data.get('Title'),
+                'description': data.get('Description'),
+                'points': data.get('Points'),
+                'badge': f"{RA_IMG_BASE}/Badge/{data.get('BadgeName')}.png",
+                'date': format_ra_date(data.get('DateEarnedHardcore')),
+                'display_order': data.get('DisplayOrder')
+            })
+    earned_achievements.sort(key=lambda x: x['display_order'])
     game_data = {
         "title": game_api.get('Title', manual_data.get('title')),
         "console": game_api.get('ConsoleName', 'Console'),
@@ -128,7 +143,8 @@ def game_details(game_id):
         "completion": game_api.get('UserCompletionHardcore', '0%'),
         "achievements_count": f"{earned} / {total}",
         "completion_date": completion_date,
-        "hours_played": hours_played
+        "hours_played": hours_played,
+        "achievements_list": earned_achievements
     }
     return render_template('game_details.html', game=game_data)
 
