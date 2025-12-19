@@ -1,1 +1,2 @@
+cd poke-tracker/
 workon meu-venv
