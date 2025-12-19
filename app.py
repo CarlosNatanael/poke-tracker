@@ -79,7 +79,7 @@ def index():
                 css_class = "softcore"
             else:
                 progress = pct_won * 100
-                status = f"Jogando ({progress:.1f}%)"
+                status = f"Jogando ({progress:.0f}%)"
                 css_class = "in-progress"
         
         progress_list.append({
