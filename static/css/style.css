@@ -201,3 +201,17 @@ body {
 .not-started { border-left-color: #333; opacity: 0.6; }
 .not-started .game-status { color: var(--gray); }
 .not-started .game-icon { filter: grayscale(100%); opacity: 0.4; }
+
+/* Link do GitHub na página Sobre */
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.github-link:hover {
+    color: var(--highlight); /* Fica amarelo quando passa o mouse */
+}
